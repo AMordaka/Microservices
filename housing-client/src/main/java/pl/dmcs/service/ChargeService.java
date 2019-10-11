@@ -1,0 +1,15 @@
+package pl.dmcs.service;
+
+import pl.dmcs.model.Charge;
+import pl.dmcs.model.Local;
+
+import java.util.List;
+
+public interface ChargeService {
+
+    List<Charge> getAllCharges();
+
+    List<Charge> getChargesFromLocal(Local local);
+
+    void save(Charge charge);
+}
