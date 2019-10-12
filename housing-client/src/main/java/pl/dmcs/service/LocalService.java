@@ -27,4 +27,8 @@ public interface LocalService {
     void generateAmounts();
 
     void acceptAllCharges();
+
+    void update(Local local);
+
+    void remove(Integer id);
 }

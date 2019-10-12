@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
 
     @Override
     public List<User> getAllUsers() {
@@ -54,12 +59,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void assignUserToLocal(UserLocalDTO dto) {
-        User user = userRepository.findById(dto.getUser().getId()).orElseThrow(() -> new UserNotFoundException(String.valueOf(dto)));
-        Local local = localRepository.findById(dto.getLocal().getId()).orElseThrow(() -> new LocalNotFoundException(String.valueOf(dto)));
+    public void assignUserToLocal(Integer userId, Integer localId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(String.valueOf(userId)));
+        Local local = localRepository.findById(localId).orElseThrow(() -> new LocalNotFoundException(String.valueOf(localId)));
         local.setUser(user);
         local.setIsRented(true);
         localRepository.save(local);
+    }
+
+    @Override
+    public void removeUser(Integer userId) {
+        userRepository.deleteById(userId);
     }
 
 }

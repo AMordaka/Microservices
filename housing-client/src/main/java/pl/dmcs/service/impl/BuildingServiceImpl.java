@@ -33,6 +33,25 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    public void updateBuilding(Building building) {
+        buildingRepository.save(building);
+    }
+
+    @Override
+    public void removeBuilding(Integer id) {
+        buildingRepository.deleteById(id);
+    }
+
+    @Override
+    public void addLocalToBuilding(Local local, Integer id) {
+        Building building = findById(id);
+        Set<Local> locals = building.getLocals();
+        locals.add(local);
+        building.setLocals(locals);
+        buildingRepository.save(building);
+    }
+
+    @Override
     public Building findById(Integer id) {
         return buildingRepository.findById(id).orElseThrow(() -> new BuildingNotFoundException(String.valueOf(id)));
     }

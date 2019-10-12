@@ -11,5 +11,11 @@ public interface ChargeService {
 
     List<Charge> getChargesFromLocal(Local local);
 
+    Charge get(Integer id);
+
     void save(Charge charge);
+
+    void update(Charge charge);
+
+    void remove(Integer id);
 }

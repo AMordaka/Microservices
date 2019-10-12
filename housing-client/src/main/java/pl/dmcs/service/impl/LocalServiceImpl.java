@@ -117,6 +117,16 @@ public class LocalServiceImpl implements LocalService {
         }
     }
 
+    @Override
+    public void update(Local local) {
+        registerLocal(local);
+    }
+
+    @Override
+    public void remove(Integer id) {
+        localRepository.deleteById(id);
+    }
+
     Charge getDefaultChargeForHousing(Local local) {
         Double defaultDouble = Double.parseDouble("10");
         return new Charge(LocalDate.now(), defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, local);

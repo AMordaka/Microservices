@@ -29,7 +29,22 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
+    public Charge get(Integer id) {
+        return chargeRepository.getOne(id);
+    }
+
+    @Override
     public void save(Charge charge) {
         chargeRepository.save(charge);
+    }
+
+    @Override
+    public void update(Charge charge) {
+        save(charge);
+    }
+
+    @Override
+    public void remove(Integer id) {
+        chargeRepository.deleteById(id);
     }
 }
