@@ -9,7 +9,7 @@ How run it?
 
 GET TOKEN: 
 
-<pre>curl -i -H "Content-Type: application/json" -X POST -d '{"username":"USER","PASSWORD":"shuaicj"}' http://localhost:8080/login</pre>
+<pre>curl -i -H "Content-Type: application/json" -X POST -d '{"username":"user","PASSWORD":"user"}' http://localhost:8080/login</pre>
 
 You will see the token in response header for user. Note that the status code 401 will be returned if you provide incorrect username or password. And similarly, get token for user admin:
 
@@ -19,7 +19,7 @@ The user admin is defined with two roles: USER and ADMIN
 
 The general command to verify if the auth works is as follows:
 
-<pre>curl -i -H "Authorization: Bearer TOKEN" http://localhost:8080/backend/user</pre>
+<pre>curl -i -H "Authorization: Bearer TOKEN" http://localhost:8080/housing-client/user</pre>
 
 |                                     | /housing-client/admin | /housing-client/user | /housing-client/guest |
 | ----------------------------------- | -------------- | ------------- | -------------- |

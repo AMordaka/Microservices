@@ -19,19 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    JwtAuthenticationConfig config;
+    private JwtAuthenticationConfig config;
 
     @Bean
     public JwtAuthenticationConfig jwtConfig() {
         return new JwtAuthenticationConfig();
     }
 
+    //TODO Change to database instead of in memory
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("admin").password(encoder.encode("admin")).roles("ADMIN", "USER").and()
-                .withUser("shuaicj").password(encoder.encode("shuaicj")).roles("USER");
+                .withUser("user").password(encoder.encode("user")).roles("USER");
     }
 
     @Override
