@@ -1,0 +1,7 @@
+server:
+  port: 8085
+
+custom:
+  security:
+    jwt:
+      secret: password

@@ -4,3 +4,19 @@ ribbon:
 
 server:
   port: 8080
+
+zuul:
+  routes:
+    auth-center:
+      path: /login/**
+      url: http://127.0.0.1:8085/
+      sensitiveHeaders: Cookie,Set-Cookie
+      stripPrefix: false
+    backend-service:
+      path: /housing-client/**
+      url: http://127.0.0.1:8089/
+
+custom:
+  security:
+    jwt:
+      secret: password

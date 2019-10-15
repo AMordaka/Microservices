@@ -17,10 +17,19 @@ public class HousingClient {
         SpringApplication.run(HousingClient.class, args);
     }
 
-    @GetMapping("/greeting")
-    public String greeting() {
-        return "Hello World";
+    @GetMapping("/admin")
+    public String admin() {
+        return "Hello Admin!";
     }
 
+    @GetMapping("/user")
+    public String user() {
+        return "Hello User!";
+    }
+
+    @GetMapping("/guest")
+    public String guest() {
+        return "Hello Guest!";
+    }
 
 }
