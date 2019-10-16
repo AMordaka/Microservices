@@ -1,19 +1,20 @@
 package pl.dmcs.security.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.dmcs.common.JwtAuthenticationConfig;
 import pl.dmcs.common.JwtUsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,18 +22,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationConfig config;
 
-    @Bean
-    public JwtAuthenticationConfig jwtConfig() {
-        return new JwtAuthenticationConfig();
-    }
+    @Autowired
+    private DataSource dataSource;
 
-    //TODO Change to database instead of in memory
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
+
+
+    //TODO Change to postgres database instead h2
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser("admin").password(encoder.encode("admin")).roles("ADMIN", "USER").and()
-                .withUser("user").password(encoder.encode("user")).roles("USER");
+        auth
+                .jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -53,5 +64,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(config.getUrl()).permitAll()
                 .anyRequest().authenticated();
+    }
+
+    @Bean
+    public JwtAuthenticationConfig jwtConfig() {
+        return new JwtAuthenticationConfig();
+    }
+
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
