@@ -18,6 +18,9 @@ zuul:
     occupant-service:
       path: /occupant-service/**
       url: http://127.0.0.1:8091/
+    admin-service:
+      path: /admin-service/**
+      url: http://127.0.0.1:8092/
 
 custom:
   security:

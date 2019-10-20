@@ -1,8 +1,7 @@
-package pl.dmcs.manager.service.managerservice.model;
+package pl.dmcs.adminservice.adminservice.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import pl.dmcs.manager.service.managerservice.model.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
