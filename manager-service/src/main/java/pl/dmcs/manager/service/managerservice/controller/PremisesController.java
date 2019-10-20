@@ -56,20 +56,6 @@ public class PremisesController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/bill/{id}",method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity addBillToPremises(@RequestBody Bill bill, @PathVariable("id") int id) {
-        premisesService.addBillToPremises(bill,id);
-        return ResponseEntity.ok().build();
-    }
-
-    @RequestMapping(value = "/{billId}/{premisesId}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public ResponseEntity deleteBillFromPremises(@PathVariable("billId") int billId, @PathVariable("premisesId") int premisesId) {
-        premisesService.deleteBillFromPremises(billId, premisesId);
-        return ResponseEntity.ok().build();
-    }
-
     @RequestMapping(value = "/occupant/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getPremisesForOccupant(@PathVariable("id") int occupantId) throws OccupantNotFoundException {
@@ -89,6 +75,12 @@ public class PremisesController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/{billId}/{premisesId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deleteBillFromPremises(@PathVariable("billId") int billId, @PathVariable("premisesId") int premisesId) {
+        billService.deleteBillFromPremises(billId, premisesId);
+        return ResponseEntity.ok().build();
+    }
 
     @RequestMapping(value = "/available", method = RequestMethod.GET)
     @ResponseBody

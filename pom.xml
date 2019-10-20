@@ -10,12 +10,13 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>housing-client</module>
         <module>config-server</module>
         <module>gateway-service</module>
         <module>registry-service</module>
         <module>common</module>
         <module>auth-center</module>
+        <module>manager-service</module>
+        <module>occupant-service</module>
     </modules>
 
     <dependencies>

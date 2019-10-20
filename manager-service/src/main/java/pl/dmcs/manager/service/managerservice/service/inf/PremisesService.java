@@ -19,10 +19,6 @@ public interface PremisesService {
 
     void delete(int id);
 
-    void addBillToPremises(Bill bill, int premisesId);
-
-    void deleteBillFromPremises(int billId, int premisesId);
-
     Set<Premises> getPremisesForSpecificOccupant(int occupantId) throws OccupantNotFoundException;
 
     void setBillAccepted(int billId);

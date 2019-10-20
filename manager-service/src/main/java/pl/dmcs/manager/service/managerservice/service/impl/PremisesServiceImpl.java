@@ -56,45 +56,6 @@ public class PremisesServiceImpl implements PremisesService {
         premisesRepository.deleteById(id);
     }
 
-    @Override
-    public void addBillToPremises(Bill bill, int premisesId) {
-        Premises premises = null;
-
-        try {
-            premises = get(premisesId);
-        } catch (PremisesNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (premises != null) {
-            List<Bill> bills =  premises.getBills();
-
-            Bill convertedBill = PremisesBillConverter.convert(bill);
-
-            bills.add(convertedBill);
-            convertedBill.setPremises(premises);
-            premises.setBills(bills);
-            billService.save(convertedBill);
-            premisesRepository.save(premises);
-        }
-    }
-
-    @Override
-    public void deleteBillFromPremises(int billId, int premisesId) {
-        Premises premises = null;
-
-        try {
-            premises = get(premisesId);
-        } catch (PremisesNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        List<Bill> bills = premises.getBills();
-
-        bills.removeIf(bill -> bill.getId() == billId);
-        premises.setBills(bills);
-        premisesRepository.save(premises);
-    }
 
     @Override
     public Set<Premises> getPremisesForSpecificOccupant(int occupantId) throws OccupantNotFoundException {

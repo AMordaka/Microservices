@@ -8,10 +8,10 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>pl.dmcs.manager.service</groupId>
-	<artifactId>manager-service</artifactId>
+	<groupId>pl.dmcs.occupant.service</groupId>
+	<artifactId>occupant-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>manager-service</name>
+	<name>occupant-service</name>
 
 	<properties>
 		<java.version>1.8</java.version>

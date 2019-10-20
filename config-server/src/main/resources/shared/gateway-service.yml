@@ -12,9 +12,12 @@ zuul:
       url: http://127.0.0.1:8085/
       sensitiveHeaders: Cookie,Set-Cookie
       stripPrefix: false
-    backend-service:
-      path: /housing-client/**
-      url: http://127.0.0.1:8089/
+    manager-service:
+      path: /manager-service/**
+      url: http://127.0.0.1:8090/
+    occupant-service:
+      path: /occupant-service/**
+      url: http://127.0.0.1:8091/
 
 custom:
   security:
