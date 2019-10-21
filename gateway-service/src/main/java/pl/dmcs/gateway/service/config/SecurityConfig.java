@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(config.getUrl()).permitAll()
-                .antMatchers("/housing-client/admin").hasRole("ADMIN")
-                .antMatchers("/housing-client/user").hasRole("USER")
-                .antMatchers("/housing-client/guest").permitAll();
+                .antMatchers("/admin-service/manager/**").hasRole("ADMIN")
+                .antMatchers("/manager-service/occupant/**").hasAnyRole("MANAGER","ADMIN")
+                .antMatchers("/occupant-service/**").hasRole("OCCUPANT");
     }
 }
