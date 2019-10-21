@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>admin-service</module>
         <module>config-server</module>
         <module>gateway-service</module>
         <module>registry-service</module>
@@ -87,6 +88,8 @@
         <itext.version>5.5.13</itext.version>
         <hibernate-core.version>5.4.6.Final</hibernate-core.version>
         <h2-database.version>1.4.199</h2-database.version>
+        <itext.version>5.5.10</itext.version>
+        <pdf-box.version>2.0.4</pdf-box.version>
     </properties>
 
 </project>
