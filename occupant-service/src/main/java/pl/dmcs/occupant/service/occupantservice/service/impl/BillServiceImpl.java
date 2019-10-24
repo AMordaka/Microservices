@@ -8,6 +8,7 @@ import pl.dmcs.occupant.service.occupantservice.exception.BillNotFoundException;
 import pl.dmcs.occupant.service.occupantservice.exception.PremisesNotFoundException;
 import pl.dmcs.occupant.service.occupantservice.model.Bill;
 import pl.dmcs.occupant.service.occupantservice.model.Premises;
+import pl.dmcs.occupant.service.occupantservice.model.dto.BillDto;
 import pl.dmcs.occupant.service.occupantservice.repository.BillRepository;
 import pl.dmcs.occupant.service.occupantservice.service.impl.converter.PremisesBillConverter;
 import pl.dmcs.occupant.service.occupantservice.service.impl.generator.PdfGenerator;
@@ -37,7 +38,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void addBillToPremises(Bill bill, int premisesId) {
+    public void addBillToPremises(BillDto bill, int premisesId) {
         Premises premises = null;
 
         try {

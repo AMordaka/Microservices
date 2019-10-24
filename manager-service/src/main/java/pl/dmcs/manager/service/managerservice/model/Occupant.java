@@ -18,15 +18,6 @@ public class Occupant {
     @Column
     private int id;
 
-    @Column
-    private String firstname;
-
-    @Column
-    private String lastname;
-
-    @Column
-    private String email;
-
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 

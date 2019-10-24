@@ -7,6 +7,8 @@ import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundExceptio
 import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Bill;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.dto.PremisesDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UpdatePremisesDto;
 import pl.dmcs.manager.service.managerservice.service.inf.BillService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
 
@@ -36,15 +38,15 @@ public class PremisesController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createPremises(@RequestBody Premises premises){
-        int id = premisesService.save(premises);
+    public ResponseEntity createPremises(@RequestBody PremisesDto premises){
+        int id = premisesService.saveDto(premises);
         return ResponseEntity.ok(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updatePremises(@RequestBody Premises premises) {
-        int id = premisesService.save(premises);
+    public ResponseEntity updatePremises(@RequestBody UpdatePremisesDto premises) {
+        int id = premisesService.update(premises);
         return ResponseEntity.ok(id);
     }
 

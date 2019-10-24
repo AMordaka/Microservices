@@ -5,6 +5,8 @@ import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundExceptio
 import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Bill;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.dto.PremisesDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UpdatePremisesDto;
 
 import java.util.List;
 import java.util.Set;
@@ -13,9 +15,11 @@ public interface PremisesService {
 
     int save(Premises premises);
 
+    int saveDto(PremisesDto premisesDto);
+
     Premises get(int id) throws PremisesNotFoundException;
 
-    int update(Premises premises);
+    int update(UpdatePremisesDto premises);
 
     void delete(int id);
 

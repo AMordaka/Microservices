@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
+import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
 
 @RestController
@@ -29,14 +30,14 @@ public class OccupantController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createOccupant(@RequestBody Occupant occupant) {
-        int id = occupantService.save(occupant);
+    public ResponseEntity createOccupant(@RequestBody OccupantDto occupantDto) {
+        int id = occupantService.save(occupantDto);
         return ResponseEntity.ok(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateOccupant(@RequestBody Occupant occupant) {
+    public ResponseEntity updateOccupant(@RequestBody OccupantDto occupant) {
         int id = occupantService.save(occupant);
         return ResponseEntity.ok(id);
     }

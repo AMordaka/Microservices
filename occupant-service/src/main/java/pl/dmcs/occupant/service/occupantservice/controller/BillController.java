@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dmcs.occupant.service.occupantservice.model.Bill;
+import pl.dmcs.occupant.service.occupantservice.model.dto.BillDto;
 import pl.dmcs.occupant.service.occupantservice.service.inf.BillService;
 
 @RestController
@@ -15,7 +16,7 @@ public class BillController {
 
     @RequestMapping(value = "/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addBillToPremises(@RequestBody Bill bill, @PathVariable("id") int id) {
+    public ResponseEntity addBillToPremises(@RequestBody BillDto bill, @PathVariable("id") int id) {
         billService.addBillToPremises(bill,id);
         return ResponseEntity.ok().build();
     }

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.dmcs.manager.service.managerservice.exception.BuildingNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Building;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.dto.BuildingDto;
+import pl.dmcs.manager.service.managerservice.model.dto.PremisesDto;
 import pl.dmcs.manager.service.managerservice.service.inf.BuildingService;
 
 @RestController
@@ -30,14 +32,14 @@ public class BuildingController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createBuilding(@RequestBody Building building) {
+    public ResponseEntity createBuilding(@RequestBody BuildingDto building) {
         int id = buildingService.save(building);
         return ResponseEntity.ok(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateBuilding(@RequestBody Building building) {
+    public ResponseEntity updateBuilding(@RequestBody BuildingDto building) {
         int id = buildingService.save(building);
         return ResponseEntity.ok(id);
     }
@@ -52,7 +54,7 @@ public class BuildingController {
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addPremisesToBuilding(@RequestBody Premises premises, @PathVariable("buildingId") int buildingId) {
+    public ResponseEntity addPremisesToBuilding(@RequestBody PremisesDto premises, @PathVariable("buildingId") int buildingId) {
         buildingService.addPremisesToBuilding(premises, buildingId);
         return ResponseEntity.ok().build();
     }

@@ -3,8 +3,10 @@ package pl.dmcs.adminservice.adminservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.dmcs.adminservice.adminservice.model.dto.ManagerDto;
 import pl.dmcs.adminservice.adminservice.exception.ManagerNotFoundException;
 import pl.dmcs.adminservice.adminservice.model.Manager;
+import pl.dmcs.adminservice.adminservice.model.dto.UpdateManagerDto;
 import pl.dmcs.adminservice.adminservice.service.inf.ManagerService;
 
 @RestController
@@ -26,16 +28,22 @@ public class ManagerController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createManager(@RequestBody Manager manager) {
+    public ResponseEntity createManager(@RequestBody ManagerDto manager) {
         int id = managerService.save(manager);
         return ResponseEntity.ok(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateManager(@RequestBody Manager manager){
-        int id = managerService.update(manager);
-        return ResponseEntity.ok().build();
+    public ResponseEntity updateManager(@RequestBody UpdateManagerDto managerDto){
+        try {
+            int id = managerService.update(managerDto);
+            return ResponseEntity.ok().build();
+        } catch (ManagerNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)

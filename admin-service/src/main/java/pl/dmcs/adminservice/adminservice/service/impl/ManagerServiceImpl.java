@@ -1,12 +1,15 @@
 package pl.dmcs.adminservice.adminservice.service.impl;
 
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.dmcs.adminservice.adminservice.model.dto.ManagerDto;
 import pl.dmcs.adminservice.adminservice.exception.BuildingNotFoundException;
 import pl.dmcs.adminservice.adminservice.exception.ManagerNotFoundException;
 import pl.dmcs.adminservice.adminservice.model.Building;
 import pl.dmcs.adminservice.adminservice.model.Manager;
 import pl.dmcs.adminservice.adminservice.model.User;
+import pl.dmcs.adminservice.adminservice.model.dto.UpdateManagerDto;
 import pl.dmcs.adminservice.adminservice.repository.ManagerRepository;
 import pl.dmcs.adminservice.adminservice.service.inf.BuildingService;
 import pl.dmcs.adminservice.adminservice.service.inf.ManagerService;
@@ -22,13 +25,16 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private BuildingService buildingService;
     @Override
-    public int save(Manager manager) {
+    public int save(ManagerDto managerDto) {
+        Manager manager = new Manager();
         User user = new User();
-//        user.setPassword(passwordEncoder.encode(pass));
-//        user.setActivationToken(token);
+        user.setName(managerDto.getFirstName());
+        user.setLastName(managerDto.getLastName());
+        user.setEmail(managerDto.getEmail());
+        user.setActive(managerDto.getActive());
         manager.setUser(user);
 
-        int id =managerRepository.saveAndFlush(manager).getId();
+        int id=managerRepository.saveAndFlush(manager).getId();
 
         return id;
     }
@@ -39,8 +45,16 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public int update(Manager manager) {
-      return  managerRepository.saveAndFlush(manager).getId();
+    public int update(UpdateManagerDto managerDto) throws ManagerNotFoundException {
+        Manager manager = get(managerDto.getId());
+        User user  = manager.getUser();
+        user.setName(managerDto.getFirstName());
+        user.setLastName(managerDto.getLastName());
+        user.setEmail(managerDto.getEmail());
+        user.setActive(managerDto.getActive());
+        manager.setUser(user);
+
+        return managerRepository.saveAndFlush(manager).getId();
     }
 
     @Override

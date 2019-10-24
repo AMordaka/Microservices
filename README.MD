@@ -8,7 +8,7 @@ How run it?
 6. Occupant Service
 7. Admin Service
 
-Connet to database:
+Connect to database:
 
 Use h2 database command line  client:
 <pre>

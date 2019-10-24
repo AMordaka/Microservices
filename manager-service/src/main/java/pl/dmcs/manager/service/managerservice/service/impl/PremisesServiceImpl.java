@@ -10,6 +10,8 @@ import pl.dmcs.manager.service.managerservice.model.Bill;
 import pl.dmcs.manager.service.managerservice.model.Building;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.dto.PremisesDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UpdatePremisesDto;
 import pl.dmcs.manager.service.managerservice.repository.PremisesRepository;
 import pl.dmcs.manager.service.managerservice.service.impl.converter.PremisesBillConverter;
 import pl.dmcs.manager.service.managerservice.service.inf.BillService;
@@ -37,7 +39,16 @@ public class PremisesServiceImpl implements PremisesService {
 
 
     @Override
-    public int save(Premises premises) {
+    public int save(Premises premisesDto) {
+        Premises premises = new Premises();
+        premises.setNumber(premisesDto.getNumber());
+        return premisesRepository.save(premises).getId();
+    }
+
+    @Override
+    public int saveDto(PremisesDto premisesDto) {
+        Premises premises = new Premises();
+        premises.setNumber(premisesDto.getNumber());
         return premisesRepository.save(premises).getId();
     }
 
@@ -47,7 +58,9 @@ public class PremisesServiceImpl implements PremisesService {
     }
 
     @Override
-    public int update(Premises premises) {
+    public int update(UpdatePremisesDto premisesDto) {
+        Premises premises = premisesRepository.getOne(premisesDto.getId());
+        premises.setNumber(premisesDto.getNumber());
         return premisesRepository.saveAndFlush(premises).getId();
     }
 

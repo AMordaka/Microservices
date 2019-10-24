@@ -2,6 +2,7 @@ package pl.dmcs.occupant.service.occupantservice.service.impl.converter;
 
 
 import pl.dmcs.occupant.service.occupantservice.model.Bill;
+import pl.dmcs.occupant.service.occupantservice.model.dto.BillDto;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,9 +17,8 @@ public class PremisesBillConverter {
     private static double HEATING_FACTOR = 1.3;
 
 
-    public static Bill convert(Bill bill) {
+    public static Bill convert(BillDto bill) {
         Bill convertedBill = new Bill();
-        convertedBill.setId(bill.getId());
         convertedBill.setElectricity(Math.round(bill.getElectricity() * ELECTRICITY_FACTOR*100.0)/100.0);
         convertedBill.setGas(Math.round(bill.getGas() * GAS_FACTOR *100.0)/100.0);
         convertedBill.setColdWater(Math.round(bill.getColdWater() * COLD_WATER_FACTOR*100.0)/100.0);

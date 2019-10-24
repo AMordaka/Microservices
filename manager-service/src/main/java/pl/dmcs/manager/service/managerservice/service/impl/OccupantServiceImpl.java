@@ -7,6 +7,8 @@ import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundExceptio
 import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.Premises;
 import pl.dmcs.manager.service.managerservice.model.User;
+import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UpdateOccupantDto;
 import pl.dmcs.manager.service.managerservice.repository.OccupantRepository;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
@@ -26,16 +28,16 @@ public class OccupantServiceImpl implements OccupantService {
 
 
     @Override
-    public int save(Occupant occupant) {
-
+    public int save(OccupantDto occupantDto) {
+        Occupant occupant = new Occupant();
         User user = new User();
-        user.setName(occupant.getFirstname());
-        user.setLastName(occupant.getLastname());
-//        user.setPassword(passwordEncoder.encode(pass));
-//        user.setActive;
+        user.setName(occupantDto.getFirstName());
+        user.setLastName(occupantDto.getLastName());
+        user.setEmail(occupantDto.getEmail());
+        user.setActive(occupantDto.getActive());
         occupant.setUser(user);
-
-        return occupantRepository.saveAndFlush(occupant).getId();
+        int id=occupantRepository.saveAndFlush(occupant).getId();
+        return id;
     }
 
     @Override
@@ -44,7 +46,13 @@ public class OccupantServiceImpl implements OccupantService {
     }
 
     @Override
-    public int update(Occupant occupant) {
+    public int update(UpdateOccupantDto occupantDto) throws OccupantNotFoundException {
+        Occupant occupant = get(occupantDto.getId());
+        User user = occupant.getUser();
+        user.setName(occupantDto.getFirstName());
+        user.setLastName(occupantDto.getLastName());
+        user.setActive(occupantDto.getActive());
+        user.setEmail(occupantDto.getEmail());
         return occupantRepository.saveAndFlush(occupant).getId();
     }
 

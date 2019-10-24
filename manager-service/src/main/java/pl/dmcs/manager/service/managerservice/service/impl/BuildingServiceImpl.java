@@ -6,10 +6,15 @@ import pl.dmcs.manager.service.managerservice.exception.BuildingNotFoundExceptio
 import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Building;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.dto.BuildingDto;
+import pl.dmcs.manager.service.managerservice.model.dto.PremisesDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UpdateBuildingDto;
 import pl.dmcs.manager.service.managerservice.repository.BuildingRepository;
+import pl.dmcs.manager.service.managerservice.repository.PremisesRepository;
 import pl.dmcs.manager.service.managerservice.service.inf.BuildingService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,12 +25,19 @@ public class BuildingServiceImpl implements BuildingService {
    private BuildingRepository buildingRepository;
 
    @Autowired
+   private PremisesRepository premisesRepository;
+
+   @Autowired
    private PremisesService premisesService;
 
 
 
     @Override
-    public int save(Building building) {
+    public int save(BuildingDto buildingDto) {
+        Building building = new Building();
+        building.setManager(null);
+        building.setNumber(buildingDto.getNumber());
+        building.setPremises(new HashSet<>());
         return buildingRepository.saveAndFlush(building).getId();
     }
 
@@ -35,7 +47,9 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public int update(Building building) {
+    public int update(UpdateBuildingDto buildingDto) throws BuildingNotFoundException {
+        Building building = get(buildingDto.getId());
+        building.setNumber(buildingDto.getNumber());
         return buildingRepository.saveAndFlush(building).getId();
     }
 
@@ -61,7 +75,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void addPremisesToBuilding(Premises premises, int buildingId) {
+    public void addPremisesToBuilding(PremisesDto premisesDto, int buildingId) {
         Building building = null;
 
         try {
@@ -71,13 +85,15 @@ public class BuildingServiceImpl implements BuildingService {
         }
 
 
-        if (building != null && premises != null) {
+        if (building != null && premisesDto != null) {
 
+            Premises premises = new Premises();
+            premises.setNumber(premisesDto.getNumber());
             Set<Premises> premisesSet = building.getPremises();
             premisesSet.add(premises);
             premises.setBuilding(building);
             building.setPremises(premisesSet);
-            save(building);
+            buildingRepository.save(building);
         }
     }
 

@@ -24,6 +24,7 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private PremisesService premisesService;
 
+
     @Autowired
     private BillRepository billRepository;
 
