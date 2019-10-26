@@ -1,59 +1,79 @@
-version: "3"
+version: "2"
 
 services:
   config-server:
     build:
       context: ./config-server
       dockerfile: Dockerfile
+    image: config-server
+    ports:
+      - 8888:8888
 
   registry-service:
     build:
       context: ./registry-service
       dockerfile: Dockerfile
+    image: registry-service
     depends_on:
       - config-server
+    ports:
+      - 8761:8761
 
   gateway-service:
     build:
       context: ./gateway-service
       dockerfile: Dockerfile
+    image: gateway-service
     depends_on:
       - config-server
       - registry-service
+    ports:
+      - 8080:8080
 
   auth-center:
     build:
       context: ./auth-center
       dockerfile: Dockerfile
+    image: auth-center
     depends_on:
       - config-server
       - registry-service
       - gateway-service
+    ports:
+      - 8085:8085
 
   admin-service:
     build:
       context: ./admin-service
       dockerfile: Dockerfile
+    image: admin-service
     depends_on:
       - config-server
       - registry-service
       - gateway-service
+    ports:
+      - 8092:8092
 
   manager-service:
     build:
       context: ./manager-service
       dockerfile: Dockerfile
+    image: manager-service
     depends_on:
       - config-server
       - registry-service
       - gateway-service
+    ports:
+      - 8090:8090
 
   occupant-service:
     build:
       context: ./occupant-service
       dockerfile: Dockerfile
+    image: occupant-service
     depends_on:
       - config-server
       - registry-service
       - gateway-service
-
+    ports:
+      - 8091:8091
