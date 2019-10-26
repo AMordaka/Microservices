@@ -11,6 +11,7 @@
 	<artifactId>manager-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>manager-service</name>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
@@ -50,5 +51,21 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  config-server:
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+
+  registry-service:
+    build:
+      context: ./registry-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - registry-service
+
+  auth-center:
+    build:
+      context: ./auth-center
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - registry-service
+      - gateway-service
+
+  admin-service:
+    build:
+      context: ./admin-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - registry-service
+      - gateway-service
+
+  manager-service:
+    build:
+      context: ./manager-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - registry-service
+      - gateway-service
+
+  occupant-service:
+    build:
+      context: ./occupant-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - registry-service
+      - gateway-service
+

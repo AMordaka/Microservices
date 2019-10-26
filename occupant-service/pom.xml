@@ -11,6 +11,7 @@
 	<artifactId>occupant-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>occupant-service</name>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
@@ -48,5 +49,22 @@
 			<version>${pdf-box.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
