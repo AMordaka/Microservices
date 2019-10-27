@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DB:jdbc:postgresql://172.25.0.2:5432/housingdb}
+    url: ${DB:jdbc:postgresql://localhost:5432/housingdb}
     username: dmcs
     password: docker
   jpa:
