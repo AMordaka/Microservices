@@ -1,11 +1,23 @@
 version: "2"
 
 services:
+  database-service:
+    image: postgres:9.6
+    container_name: database-service
+    environment:
+       POSTGRES_USER: dmcs
+       POSTGRES_PASSWORD: docker
+       POSTGRES_DB: housingdb
+    ports:
+      - "5432:5432"
+
   config-server:
     build:
       context: ./config-server
       dockerfile: Dockerfile
     image: config-server
+    depends_on:
+      - database-service
     ports:
       - 8888:8888
 

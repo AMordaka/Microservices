@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: ${DB:jdbc:h2:tcp://localhost:9090/mem:testdb}
-    username: sa
-    password:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB:jdbc:postgresql://172.25.0.2:5432/housingdb}
+    username: dmcs
+    password: docker
   jpa:
     show-sql: true
     hibernate:

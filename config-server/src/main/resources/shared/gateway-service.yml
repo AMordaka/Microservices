@@ -9,18 +9,18 @@ zuul:
   routes:
     auth-center:
       path: /login/**
-      url: http://127.0.0.1:8085/
+      url: http://192.168.99.1:8085/
       sensitiveHeaders: Cookie,Set-Cookie
       stripPrefix: false
     manager-service:
       path: /manager-service/**
-      url: http://127.0.0.1:8090/
+      url: http://192.168.99.1:8090/
     occupant-service:
       path: /occupant-service/**
-      url: http://127.0.0.1:8091/
+      url: http://192.168.99.1:8091/
     admin-service:
       path: /admin-service/**
-      url: http://127.0.0.1:8092/
+      url: http://192.168.99.1:8092/
 
 custom:
   security:
