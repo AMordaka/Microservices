@@ -1,11 +1,13 @@
 package pl.dmcs.manager.service.managerservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundException;
 import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.Premises;
+import pl.dmcs.manager.service.managerservice.model.Role;
 import pl.dmcs.manager.service.managerservice.model.User;
 import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
 import pl.dmcs.manager.service.managerservice.model.dto.UpdateOccupantDto;
@@ -13,6 +15,7 @@ import pl.dmcs.manager.service.managerservice.repository.OccupantRepository;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +28,8 @@ public class OccupantServiceImpl implements OccupantService {
     @Autowired
     private PremisesService premisesService;
 
-
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public int save(OccupantDto occupantDto) {
@@ -34,10 +38,15 @@ public class OccupantServiceImpl implements OccupantService {
         user.setName(occupantDto.getFirstName());
         user.setLastName(occupantDto.getLastName());
         user.setEmail(occupantDto.getEmail());
+        Set<Role> roles = new HashSet<>();
+        Role role = new Role();
+        role.setRole("ROLE_OCCUPANT");
+        roles.add(role);
+        user.setRoles(roles);
         user.setActive(occupantDto.getActive());
+        user.setPassword(bCryptPasswordEncoder.encode("1234"));
         occupant.setUser(user);
-        int id=occupantRepository.saveAndFlush(occupant).getId();
-        return id;
+        return occupantRepository.saveAndFlush(occupant).getId();
     }
 
     @Override

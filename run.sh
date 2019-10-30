@@ -15,7 +15,7 @@ echo "CONFIG URI: $config_uri"
 echo "DB URI: $db_uri"
 
 echo "Database starting..."
-docker run -d -it  --name postgres-database -e POSTGRES_USER=dmcs -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=housingdb postgres
+docker run -d -it  --name postgres-database -e POSTGRES_USER=dmcs -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=housingdb postgres:9.6
 sleep 15
 echo "Config Server starting..."
 docker run -d -it --name config-server-cr -e EUREKA_URI=$eurka_uri_env -e URI=$config_uri config-server

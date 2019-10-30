@@ -2,7 +2,9 @@ package pl.dmcs.adminservice.adminservice.service.impl;
 
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.dmcs.adminservice.adminservice.model.Role;
 import pl.dmcs.adminservice.adminservice.model.dto.ManagerDto;
 import pl.dmcs.adminservice.adminservice.exception.BuildingNotFoundException;
 import pl.dmcs.adminservice.adminservice.exception.ManagerNotFoundException;
@@ -14,6 +16,7 @@ import pl.dmcs.adminservice.adminservice.repository.ManagerRepository;
 import pl.dmcs.adminservice.adminservice.service.inf.BuildingService;
 import pl.dmcs.adminservice.adminservice.service.inf.ManagerService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +27,10 @@ public class ManagerServiceImpl implements ManagerService {
     private ManagerRepository managerRepository;
     @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public int save(ManagerDto managerDto) {
         Manager manager = new Manager();
@@ -31,12 +38,15 @@ public class ManagerServiceImpl implements ManagerService {
         user.setName(managerDto.getFirstName());
         user.setLastName(managerDto.getLastName());
         user.setEmail(managerDto.getEmail());
+        Set<Role> roles = new HashSet<>();
+        Role role = new Role();
+        role.setRole("ROLE_MANAGER");
+        roles.add(role);
+        user.setRoles(roles);
         user.setActive(managerDto.getActive());
+        user.setPassword(bCryptPasswordEncoder.encode("1234"));
         manager.setUser(user);
-
-        int id=managerRepository.saveAndFlush(manager).getId();
-
-        return id;
+        return managerRepository.saveAndFlush(manager).getId();
     }
 
     @Override

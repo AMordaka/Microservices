@@ -20,7 +20,7 @@ zuul:
       url: ${OCCUPANT_SERVICE_URL:http://localhost:8091/}
     admin-service:
       path: /admin-service/**
-      url: ${ADMIN_SERVICE_URL:http://localhost.1:8092/}
+      url: ${ADMIN_SERVICE_URL:http://localhost:8092/}
 
 custom:
   security:
