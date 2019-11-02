@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: user-details-service
+  cloud:
+    config:
+      uri: ${URI:http://localhost:8888}
+      fail-fast: true
+      password: 1234
+      username: user
+  rabbitmq:
+    host:
+    port:
+    username:
+    password:
+queue:
+  name: user-details-queue

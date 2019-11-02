@@ -18,6 +18,7 @@
         <module>auth-center</module>
         <module>manager-service</module>
         <module>occupant-service</module>
+        <module>user-detials-service</module>
     </modules>
 
     <dependencies>

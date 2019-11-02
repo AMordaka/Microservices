@@ -1,10 +1,10 @@
 server:
-  port: 8090
+  port: 8093
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DB:jdbc:postgresql://localhost:5432/housingdb}
+    url: ${DB:jdbc:postgresql://localhost:5432/userdetails}
     username: dmcs
     password: docker
   jpa:

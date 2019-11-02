@@ -21,6 +21,9 @@ zuul:
     admin-service:
       path: /admin-service/**
       url: ${ADMIN_SERVICE_URL:http://localhost:8092/}
+    user-details-service:
+      path: /user-details-service/**
+      url: ${USER_DETAILS_SERIVCE:http://localhost:8093/}
 
 custom:
   security:
