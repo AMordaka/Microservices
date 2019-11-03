@@ -1,8 +1,10 @@
 package pl.dmcs.user.details.service.repository;
 
+import org.springframework.stereotype.Service;
 import pl.dmcs.user.details.service.service.UserDetailsService;
 import pl.dmcs.user.details.service.model.UserDetails;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserDetailsRepository userDetailsRepository;
@@ -13,7 +15,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails getUserDetails(Integer id) {
-        return userDetailsRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
+        UserDetails userDetails = userDetailsRepository.findByUserId(id);
+        if (userDetails == null) {
+            throw new RuntimeException("Not found");
+        }
+        return userDetails;
     }
 
     @Override

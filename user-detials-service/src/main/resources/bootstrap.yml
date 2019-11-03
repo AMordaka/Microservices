@@ -8,9 +8,9 @@ spring:
       password: 1234
       username: user
   rabbitmq:
-    host:
-    port:
-    username:
-    password:
+    host: localhost
+    port: 5672
+    username: user
+    password: 1234
 queue:
   name: user-details-queue

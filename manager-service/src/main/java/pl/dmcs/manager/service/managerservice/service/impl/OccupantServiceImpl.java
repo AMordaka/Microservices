@@ -1,16 +1,24 @@
 package pl.dmcs.manager.service.managerservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundException;
 import pl.dmcs.manager.service.managerservice.exception.PremisesNotFoundException;
+import pl.dmcs.manager.service.managerservice.exception.UserDetailsNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.Premises;
 import pl.dmcs.manager.service.managerservice.model.Role;
 import pl.dmcs.manager.service.managerservice.model.User;
+import pl.dmcs.manager.service.managerservice.model.dto.OccupantDetailsDto;
 import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
 import pl.dmcs.manager.service.managerservice.model.dto.UpdateOccupantDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UserDetails;
 import pl.dmcs.manager.service.managerservice.repository.OccupantRepository;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
@@ -30,6 +38,9 @@ public class OccupantServiceImpl implements OccupantService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public int save(OccupantDto occupantDto) {
@@ -129,7 +140,35 @@ public class OccupantServiceImpl implements OccupantService {
     }
 
     @Override
+    public OccupantDetailsDto getWithDetails(int id, String token) throws OccupantNotFoundException, UserDetailsNotFoundException {
+        Occupant occupant = get(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Authorization",token);
+        HttpEntity entity = new HttpEntity(httpHeaders);
+        UserDetails userDetails = restTemplate.exchange("http://localhost:8093/user-details-service/" +id,HttpMethod.GET,entity,UserDetails.class).getBody();
+
+        if (userDetails == null) {
+            throw new UserDetailsNotFoundException("User details not found");
+        }
+        OccupantDetailsDto occupantDetailsDto = new OccupantDetailsDto();
+        occupantDetailsDto.setFirstName(occupant.getUser().getName());
+        occupantDetailsDto.setLastName(occupant.getUser().getLastName());
+        occupantDetailsDto.setEmail(occupant.getUser().getEmail());
+        occupantDetailsDto.setActive(occupant.getUser().getActive());
+        occupantDetailsDto.setAccountNumber(userDetails.getAccountNumber());
+        occupantDetailsDto.setPesel(userDetails.getPesel());
+
+
+        return occupantDetailsDto;
+    }
+
+    @Override
     public List<Occupant> getAll() {
         return occupantRepository.findAll();
+    }
+
+    @Override
+    public void addUserDetailsToOccupant(UserDetails userDetails) throws OccupantNotFoundException {
+        restTemplate.postForEntity("http://localhost:8093/user-details-service",userDetails,UserDetails.class);
     }
 }

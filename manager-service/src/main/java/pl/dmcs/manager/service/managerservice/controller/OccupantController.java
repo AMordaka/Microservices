@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundException;
+import pl.dmcs.manager.service.managerservice.exception.UserDetailsNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
+import pl.dmcs.manager.service.managerservice.model.dto.UserDetails;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/occupant")
@@ -27,6 +31,28 @@ public class OccupantController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(value = "/details",method = RequestMethod.POST)
+    public ResponseEntity addDetailsToUser(@RequestBody UserDetails userDetails) {
+        try {
+            occupantService.addUserDetailsToOccupant(userDetails);
+            return ResponseEntity.ok().build();
+        } catch (OccupantNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    @RequestMapping(value = "/{id}/withDetails", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getOccupantWithDetails(HttpServletRequest httpServletRequest,@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(occupantService.getWithDetails(id,httpServletRequest.getHeader("Authorization")));
+        } catch (OccupantNotFoundException | UserDetailsNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
