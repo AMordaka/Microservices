@@ -15,13 +15,11 @@ public class UserDetailsController {
     }
 
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity getUserDetails(@PathVariable int id) {
         return ResponseEntity.ok(userDetailsService.getUserDetails(id));
     }
 
-    @PostMapping
-    @ResponseBody
+    @PostMapping(value = "/add")
     public ResponseEntity addUserDetails(@RequestBody UserDetails userDetails) {
         userDetailsService.addUserDetails(userDetails);
         return ResponseEntity.ok().build();

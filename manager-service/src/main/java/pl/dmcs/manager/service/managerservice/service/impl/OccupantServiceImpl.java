@@ -169,6 +169,6 @@ public class OccupantServiceImpl implements OccupantService {
 
     @Override
     public void addUserDetailsToOccupant(UserDetails userDetails) throws OccupantNotFoundException {
-        restTemplate.postForEntity("http://localhost:8093/user-details-service",userDetails,UserDetails.class);
+        restTemplate.postForEntity("http://localhost:8080//user-details-service/add",userDetails,UserDetails.class);
     }
 }
