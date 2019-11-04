@@ -1,11 +1,13 @@
 package pl.dmcs.manager.service.managerservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dmcs.manager.service.managerservice.exception.OccupantNotFoundException;
 import pl.dmcs.manager.service.managerservice.exception.UserDetailsNotFoundException;
 import pl.dmcs.manager.service.managerservice.model.Occupant;
+import pl.dmcs.manager.service.managerservice.model.dto.AccountNumberDto;
 import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
 import pl.dmcs.manager.service.managerservice.model.dto.UserDetails;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
@@ -47,10 +49,17 @@ public class OccupantController {
     @ResponseBody
     public ResponseEntity getOccupantWithDetails(HttpServletRequest httpServletRequest,@PathVariable("id") int id) {
         try {
-            return ResponseEntity.ok(occupantService.getWithDetails(id,httpServletRequest.getHeader("Authorization")));
+            return ResponseEntity.ok(occupantService.getWithDetails(id,httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION)));
         } catch (OccupantNotFoundException | UserDetailsNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @RequestMapping(value = "/{id}/accountNumber", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity updateAccountNumber(@PathVariable("id") int id, @RequestBody AccountNumberDto accountNumberDto) {
+        occupantService.updateOccupantAccountNumber(id,accountNumberDto);
+        return ResponseEntity.ok().build();
     }
 
 

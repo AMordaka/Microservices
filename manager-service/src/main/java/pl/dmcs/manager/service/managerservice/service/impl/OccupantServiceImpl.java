@@ -15,10 +15,7 @@ import pl.dmcs.manager.service.managerservice.model.Occupant;
 import pl.dmcs.manager.service.managerservice.model.Premises;
 import pl.dmcs.manager.service.managerservice.model.Role;
 import pl.dmcs.manager.service.managerservice.model.User;
-import pl.dmcs.manager.service.managerservice.model.dto.OccupantDetailsDto;
-import pl.dmcs.manager.service.managerservice.model.dto.OccupantDto;
-import pl.dmcs.manager.service.managerservice.model.dto.UpdateOccupantDto;
-import pl.dmcs.manager.service.managerservice.model.dto.UserDetails;
+import pl.dmcs.manager.service.managerservice.model.dto.*;
 import pl.dmcs.manager.service.managerservice.repository.OccupantRepository;
 import pl.dmcs.manager.service.managerservice.service.inf.OccupantService;
 import pl.dmcs.manager.service.managerservice.service.inf.PremisesService;
@@ -145,7 +142,7 @@ public class OccupantServiceImpl implements OccupantService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Authorization",token);
         HttpEntity entity = new HttpEntity(httpHeaders);
-        UserDetails userDetails = restTemplate.exchange("http://localhost:8093/user-details-service/" +id,HttpMethod.GET,entity,UserDetails.class).getBody();
+        UserDetails userDetails = restTemplate.exchange("http://localhost:8080/user-details-service/" +id,HttpMethod.GET,entity,UserDetails.class).getBody();
 
         if (userDetails == null) {
             throw new UserDetailsNotFoundException("User details not found");
@@ -160,6 +157,11 @@ public class OccupantServiceImpl implements OccupantService {
 
 
         return occupantDetailsDto;
+    }
+
+    @Override
+    public void updateOccupantAccountNumber(int id, AccountNumberDto accountNumberDto) {
+        restTemplate.put("http://localhost:8080//user-details-service/" +id +"/updateAccountNumber",accountNumberDto,AccountNumberDto.class);
     }
 
     @Override
