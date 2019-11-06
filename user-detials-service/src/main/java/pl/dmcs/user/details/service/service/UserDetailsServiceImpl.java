@@ -1,6 +1,7 @@
 package pl.dmcs.user.details.service.service;
 
 import org.springframework.stereotype.Service;
+import pl.dmcs.user.details.service.exception.UserDetailsAlreadyExistException;
 import pl.dmcs.user.details.service.exception.UserDetailsNotFoundException;
 import pl.dmcs.user.details.service.model.dto.AccountNumberDto;
 import pl.dmcs.user.details.service.repository.UserDetailsRepository;
@@ -26,7 +27,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public void addUserDetails(UserDetails userDetails) {
+    public void addUserDetails(UserDetails userDetails) throws UserDetailsAlreadyExistException, UserDetailsNotFoundException {
+        UserDetails ud = userDetailsRepository.findByUserId(userDetails.getUserId());
+        if (ud != null) {
+            throw new UserDetailsAlreadyExistException();
+        }
         userDetailsRepository.save(userDetails);
     }
 

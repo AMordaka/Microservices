@@ -2,6 +2,7 @@ package pl.dmcs.user.details.service.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.dmcs.user.details.service.exception.UserDetailsAlreadyExistException;
 import pl.dmcs.user.details.service.exception.UserDetailsNotFoundException;
 import pl.dmcs.user.details.service.model.UserDetails;
 import pl.dmcs.user.details.service.model.dto.AccountNumberDto;
@@ -27,8 +28,12 @@ public class UserDetailsController {
 
     @PostMapping(value = "/add")
     public ResponseEntity addUserDetails(@RequestBody UserDetails userDetails) {
-        userDetailsService.addUserDetails(userDetails);
-        return ResponseEntity.ok().build();
+        try {
+            userDetailsService.addUserDetails(userDetails);
+            return ResponseEntity.ok().build();
+        } catch (UserDetailsAlreadyExistException | UserDetailsNotFoundException e) {
+           return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping(value = "/{id}/updateAccountNumber")
