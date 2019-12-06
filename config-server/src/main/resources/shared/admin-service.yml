@@ -1,0 +1,17 @@
+server:
+  port: 8092
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB:jdbc:postgresql://localhost:5432/housingdb}
+    username: dmcs
+    password: docker
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+custom:
+  security:
+    jwt:
+      secret: password

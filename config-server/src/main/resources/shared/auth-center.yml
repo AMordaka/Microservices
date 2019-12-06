@@ -12,14 +12,14 @@ custom:
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB:jdbc:postgresql://localhost:5432/housingdb}
+    username: dmcs
+    password: docker
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
   queries:
-    users-query: select email, password, active from user where email=?
-    roles-query: select u.email, r.role from user u inner join user_role ur on(u.user_id=ur.user_id) inner join role r on(ur.role_id=r.role_id) where u.email=?
+    users-query: select email, password, active from user_t where email=?
+    roles-query: select u.email, r.role from user_t u inner join user_role ur on(u.user_id=ur.user_id) inner join role r on(ur.role_id=r.role_id) where u.email=?

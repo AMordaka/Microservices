@@ -4,7 +4,19 @@ How run it?
 2. Registry Service
 3. Gateway Service
 4. Auth-Center
-4. Client
+5. Manager Service
+6. Occupant Service
+7. Admin Service
+
+Connect to database:
+
+Use h2 database command line  client:
+<pre>
+url: jdbc:h2:tcp://localhost:9090/mem:testdb
+username: sa
+password:
+</pre>
+
 
 
 GET TOKEN: 

@@ -10,15 +10,23 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>housing-client</module>
+        <module>admin-service</module>
         <module>config-server</module>
         <module>gateway-service</module>
         <module>registry-service</module>
         <module>common</module>
         <module>auth-center</module>
+        <module>manager-service</module>
+        <module>occupant-service</module>
+        <module>user-detials-service</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -86,6 +94,8 @@
         <itext.version>5.5.13</itext.version>
         <hibernate-core.version>5.4.6.Final</hibernate-core.version>
         <h2-database.version>1.4.199</h2-database.version>
+        <itext.version>5.5.10</itext.version>
+        <pdf-box.version>2.0.4</pdf-box.version>
     </properties>
 
 </project>

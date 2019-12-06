@@ -9,12 +9,21 @@ zuul:
   routes:
     auth-center:
       path: /login/**
-      url: http://127.0.0.1:8085/
+      url: ${AUTH_CENTER_URL:http://localhost:8085/}
       sensitiveHeaders: Cookie,Set-Cookie
       stripPrefix: false
-    backend-service:
-      path: /housing-client/**
-      url: http://127.0.0.1:8089/
+    manager-service:
+      path: /manager-service/**
+      url: ${MANGER_SERVICE_URL:http://localhost:8090/}
+    occupant-service:
+      path: /occupant-service/**
+      url: ${OCCUPANT_SERVICE_URL:http://localhost:8091/}
+    admin-service:
+      path: /admin-service/**
+      url: ${ADMIN_SERVICE_URL:http://localhost:8092/}
+    user-details-service:
+      path: /user-details-service/**
+      url: ${USER_DETAILS_SERIVCE:http://localhost:8093/}
 
 custom:
   security:
